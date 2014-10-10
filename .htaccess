@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^indexedDB.js$ src/indexedDB.js.php [L]

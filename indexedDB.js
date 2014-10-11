@@ -1,8 +1,8 @@
 /*********************************************************
 Author: 次碳酸钴（admin@web-tinker.com）
 Latest: 2014-10-10
-Require:
-  localStorage.js
+Require: localStorage.js
+Git: https://github.com/YanagiEiichi/indexedDB.js
 *********************************************************/
 
 var IDBFactory,IDBRequest,IDBOpenDBRequest,

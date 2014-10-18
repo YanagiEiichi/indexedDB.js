@@ -7,7 +7,7 @@ require.config({
     indexedDB:"indexedDB.js/master/indexedDB.js"
   }
 });
-require(["indexedDB"],function(indexedDB){
+require(["indexedDB","localStorage"],function(indexedDB){
   indexedDB.deleteDatabase("test");
   var req=indexedDB.open("test",1);
   req.onupgradeneeded=function(e){

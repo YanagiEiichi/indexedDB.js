@@ -1,6 +1,6 @@
 /*********************************************************
 Author: 次碳酸钴（admin@web-tinker.com）
-Latest: 2014-10-10
+Latest: 2014-10-19
 Require: localStorage.js
 Git: https://github.com/YanagiEiichi/indexedDB.js
 *********************************************************/
@@ -10,7 +10,7 @@ var IDBFactory,IDBRequest,IDBOpenDBRequest,
     IDBIndex,IDBDatabase,IDBCursorWithValue,
     IDBVersionChangeEvent,indexedDB;
 
-indexedDB||function(){
+indexedDB=indexedDB||(function(){
   var IDB={},prefix="indexedDB";
   function define(name,func,proto){
     function err(){throw new TypeError("Illegal constructor");};
@@ -599,5 +599,7 @@ indexedDB||function(){
     };
   }());
   //Initialize instance
-  indexedDB=new IDB.Factory;
-}();
+  return new IDB.Factory;
+})();
+
+if(window.define&&define.amd)define(indexedDB);

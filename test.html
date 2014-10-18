@@ -1,32 +1,40 @@
-﻿<script src="localStorage.js"></script>
-<script src="indexedDB.js"></script>
+﻿<base href="https://rawgit.com/YanagiEiichi/" />
+<script src="predeclare.js/master/predeclare.js"></script>
 <script>
-indexedDB.deleteDatabase("test");
-var req=indexedDB.open("test",1);
-req.onupgradeneeded=function(e){
-  var db=e.target.result;
-  var obj=db.createObjectStore("obj",{autoIncrement:true});
-  obj.createIndex("key",["grade","level"]);
-};
-req.onsuccess=function(e){
-  var db=e.target.result;
-  var tr=db.transaction(["obj"],"readwrite");
-  var obj=tr.objectStore("obj");
-  //Write data
-  for(var i=1;i<=3;i++)
-    for(var j=1;j<=8;j++)
-      obj.put({grade:i,level:j});
-  //Make query condition
-  var range=IDBKeyRange.bound([1,7],[3,2]);
-  //Query by "key" index and order by descend
-  var index=obj.index("key");
-  var cursor=index.openCursor(range,"prev");
-  //Output results
-  cursor.onsuccess=function(e){
-    if(e=e.target.result){
-      console.log(e.value);
-      e["continue"]();
-    }else console.log("That's all.");
+require.config({
+  paths:{
+    localStorage:"localStorage.js/master/localStorage.js",
+    indexedDB:"indexedDB.js/master/indexedDB.js"
+  }
+});
+require(["indexedDB"],function(indexedDB){
+  indexedDB.deleteDatabase("test");
+  var req=indexedDB.open("test",1);
+  req.onupgradeneeded=function(e){
+    var db=e.target.result;
+    var obj=db.createObjectStore("obj",{autoIncrement:true});
+    obj.createIndex("key",["grade","level"]);
   };
-};
+  req.onsuccess=function(e){
+    var db=e.target.result;
+    var tr=db.transaction(["obj"],"readwrite");
+    var obj=tr.objectStore("obj");
+    //Write data
+    for(var i=1;i<=3;i++)
+      for(var j=1;j<=8;j++)
+        obj.put({grade:i,level:j});
+    //Make query condition
+    var range=IDBKeyRange.bound([1,7],[3,2]);
+    //Query by "key" index and order by descend
+    var index=obj.index("key");
+    var cursor=index.openCursor(range,"prev");
+    //Output results
+    cursor.onsuccess=function(e){
+      if(e=e.target.result){
+        console.log(e.value);
+        e["continue"]();
+      }else console.log("That's all.");
+    };
+  };
+});
 </script>

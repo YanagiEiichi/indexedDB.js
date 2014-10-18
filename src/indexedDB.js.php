@@ -4,13 +4,12 @@ ob_start();
 require 'header.txt';
 ?>
 
-
 var IDBFactory,IDBRequest,IDBOpenDBRequest,
     IDBTransaction,IDBObjectStore,IDBKeyRange,
     IDBIndex,IDBDatabase,IDBCursorWithValue,
     IDBVersionChangeEvent,indexedDB;
 
-indexedDB||function(){
+indexedDB=indexedDB||(function(){
   var IDB={},prefix="indexedDB";
   function define(name,func,proto){
     function err(){throw new TypeError("Illegal constructor");};
@@ -38,8 +37,10 @@ require 'IDBKeyRange.js';
 require 'IDBIndex.js';
 ?>
   //Initialize instance
-  indexedDB=new IDB.Factory;
-}();
+  return new IDB.Factory;
+})();
+
+if(window.define&&define.amd)define(indexedDB);
 <?
 $data=ob_get_contents();
 $data=str_replace("\xEF\xBB\xBF",'',$data);
